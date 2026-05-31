@@ -1,7 +1,3 @@
-// =========================
-// TYPING EFFECT
-// =========================
-
 const typingText = document.getElementById("typing-text");
 
 const titles = [
@@ -19,6 +15,8 @@ let deleting = false;
 function typeEffect() {
 
 ```
+if (!typingText) return;
+
 const currentTitle = titles[titleIndex];
 
 if (!deleting) {
@@ -49,6 +47,7 @@ if (!deleting) {
             titleIndex = 0;
         }
     }
+
 }
 
 setTimeout(typeEffect, deleting ? 50 : 100);
@@ -58,68 +57,21 @@ setTimeout(typeEffect, deleting ? 50 : 100);
 
 typeEffect();
 
-// =========================
-// SCROLL REVEAL ANIMATION
-// =========================
+const menuBtn = document.querySelector(".menu-btn");
+const navLinks = document.querySelector(".nav-links");
 
-const observer = new IntersectionObserver(
-
-(entries) => {
+if(menuBtn && navLinks){
 
 ```
-entries.forEach(entry => {
-
-    if (entry.isIntersecting) {
-        entry.target.classList.add("show");
-    }
-
+menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
 });
 ```
 
-},
-{
-threshold: 0.15
 }
 
-);
-
-document.querySelectorAll(
-".section, .stat-card, .skill-card, .project-card, .timeline-item"
-).forEach((el) => {
-
-```
-observer.observe(el);
-```
-
-});
-
-// =========================
-// MOBILE MENU
-// =========================
-
-const menuBtn =
-document.querySelector(".menu-btn");
-
-const navLinks =
-document.querySelector(".nav-links");
-
-menuBtn.addEventListener("click", () => {
-
-```
-navLinks.classList.toggle("active");
-```
-
-});
-
-// =========================
-// ACTIVE NAVIGATION LINK
-// =========================
-
-const sections =
-document.querySelectorAll("section");
-
-const navItems =
-document.querySelectorAll(".nav-links a");
+const sections = document.querySelectorAll("section");
+const navItems = document.querySelectorAll(".nav-links a");
 
 window.addEventListener("scroll", () => {
 
@@ -128,10 +80,9 @@ let current = "";
 
 sections.forEach(section => {
 
-    const sectionTop =
-    section.offsetTop - 150;
+    const sectionTop = section.offsetTop - 150;
 
-    if (window.scrollY >= sectionTop) {
+    if(window.scrollY >= sectionTop){
         current = section.getAttribute("id");
     }
 
@@ -141,10 +92,7 @@ navItems.forEach(link => {
 
     link.classList.remove("active-link");
 
-    if (
-        link.getAttribute("href")
-        .includes(current)
-    ) {
+    if(link.getAttribute("href").includes(current)){
         link.classList.add("active-link");
     }
 
@@ -153,135 +101,32 @@ navItems.forEach(link => {
 
 });
 
-// =========================
-// HERO FADE-IN
-// =========================
-
 window.addEventListener("load", () => {
 
 ```
-const hero =
-document.querySelector(".hero-content");
+const hero = document.querySelector(".hero-content");
 
-hero.style.opacity = "0";
-hero.style.transform = "translateY(30px)";
+if(hero){
 
-setTimeout(() => {
+    hero.style.opacity = "0";
+    hero.style.transform = "translateY(30px)";
 
-    hero.style.transition =
-    "all 1.2s ease";
+    setTimeout(() => {
 
-    hero.style.opacity = "1";
-    hero.style.transform =
-    "translateY(0px)";
+        hero.style.transition = "all 1s ease";
+        hero.style.opacity = "1";
+        hero.style.transform = "translateY(0px)";
 
-}, 300);
-```
-
-});
-
-// =========================
-// COUNTER ANIMATION
-// =========================
-
-const counters =
-document.querySelectorAll(".stat-card h3");
-
-function runCounter(counter) {
-
-```
-const target =
-counter.innerText.replace(/\D/g, "");
-
-if (!target) return;
-
-let current = 0;
-
-const increment =
-target / 50;
-
-const updateCounter = () => {
-
-    current += increment;
-
-    if (current < target) {
-
-        counter.innerText =
-        Math.ceil(current) +
-        counter.innerText.replace(/[0-9]/g, "");
-
-        requestAnimationFrame(updateCounter);
-
-    } else {
-
-        const original =
-        counter.getAttribute("data-original");
-
-        if (original) {
-            counter.innerText = original;
-        }
-    }
-};
-
-updateCounter();
-```
+    }, 300);
 
 }
-
-counters.forEach(counter => {
-
-```
-counter.setAttribute(
-    "data-original",
-    counter.innerText
-);
 ```
 
 });
 
-const counterObserver =
-new IntersectionObserver(entries => {
+const footer = document.querySelector("footer p");
 
-```
-entries.forEach(entry => {
-
-    if (entry.isIntersecting) {
-
-        const counter =
-        entry.target.querySelector("h3");
-
-        if (counter) {
-            runCounter(counter);
-        }
-
-    }
-
-});
-```
-
-},
-{
-threshold: 0.5
-});
-
-document
-.querySelectorAll(".stat-card")
-.forEach(card => {
-
-```
-counterObserver.observe(card);
-```
-
-});
-
-// =========================
-// CURRENT YEAR FOOTER
-// =========================
-
-const footer =
-document.querySelector("footer p");
-
-if (footer) {
+if(footer){
 
 ```
 footer.innerHTML =
@@ -290,10 +135,4 @@ footer.innerHTML =
 
 }
 
-// =========================
-// CONSOLE MESSAGE
-// =========================
-
-console.log(
-"Felix Asare Portfolio Loaded Successfully 🚀"
-);
+console.log("Portfolio Loaded Successfully");
