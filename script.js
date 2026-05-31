@@ -10,128 +10,138 @@ const titles = [
 
 let titleIndex = 0;
 let charIndex = 0;
-let deleting = false;
+let isDeleting = false;
 
 function typeEffect() {
 
-```
 if (!typingText) return;
 
 const currentTitle = titles[titleIndex];
 
-if (!deleting) {
+if (!isDeleting) {
 
-    typingText.textContent =
-        currentTitle.substring(0, charIndex + 1);
+```
+typingText.textContent =
+  currentTitle.substring(0, charIndex + 1);
 
-    charIndex++;
+charIndex++;
 
-    if (charIndex === currentTitle.length) {
-        deleting = true;
-        setTimeout(typeEffect, 2000);
-        return;
-    }
+if (charIndex === currentTitle.length) {
+  isDeleting = true;
+  setTimeout(typeEffect, 2000);
+  return;
+}
+```
 
 } else {
 
-    typingText.textContent =
-        currentTitle.substring(0, charIndex - 1);
+```
+typingText.textContent =
+  currentTitle.substring(0, charIndex - 1);
 
-    charIndex--;
+charIndex--;
 
-    if (charIndex === 0) {
-        deleting = false;
-        titleIndex++;
+if (charIndex === 0) {
+  isDeleting = false;
+  titleIndex++;
 
-        if (titleIndex >= titles.length) {
-            titleIndex = 0;
-        }
-    }
+  if (titleIndex >= titles.length) {
+    titleIndex = 0;
+  }
+}
+```
 
 }
 
-setTimeout(typeEffect, deleting ? 50 : 100);
-```
-
+setTimeout(typeEffect, isDeleting ? 50 : 100);
 }
 
 typeEffect();
 
+/* Mobile Menu */
+
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 
-if(menuBtn && navLinks){
+if (menuBtn && navLinks) {
 
-```
 menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+navLinks.classList.toggle("active");
 });
-```
 
 }
+
+/* Active Navigation */
 
 const sections = document.querySelectorAll("section");
 const navItems = document.querySelectorAll(".nav-links a");
 
 window.addEventListener("scroll", () => {
 
-```
 let current = "";
 
 sections.forEach(section => {
 
-    const sectionTop = section.offsetTop - 150;
-
-    if(window.scrollY >= sectionTop){
-        current = section.getAttribute("id");
-    }
-
-});
-
-navItems.forEach(link => {
-
-    link.classList.remove("active-link");
-
-    if(link.getAttribute("href").includes(current)){
-        link.classList.add("active-link");
-    }
-
-});
 ```
+const sectionTop = section.offsetTop - 150;
 
-});
-
-window.addEventListener("load", () => {
-
-```
-const hero = document.querySelector(".hero-content");
-
-if(hero){
-
-    hero.style.opacity = "0";
-    hero.style.transform = "translateY(30px)";
-
-    setTimeout(() => {
-
-        hero.style.transition = "all 1s ease";
-        hero.style.opacity = "1";
-        hero.style.transform = "translateY(0px)";
-
-    }, 300);
-
+if (window.scrollY >= sectionTop) {
+  current = section.getAttribute("id");
 }
 ```
 
 });
 
-const footer = document.querySelector("footer p");
-
-if(footer){
+navItems.forEach(link => {
 
 ```
-footer.innerHTML =
+link.classList.remove("active-link");
+
+if (
+  current &&
+  link.getAttribute("href").includes(current)
+) {
+  link.classList.add("active-link");
+}
+```
+
+});
+
+});
+
+/* Fade In Hero */
+
+window.addEventListener("load", () => {
+
+const hero = document.querySelector(".hero-content");
+
+if (hero) {
+
+```
+hero.style.opacity = "0";
+hero.style.transform = "translateY(20px)";
+
+setTimeout(() => {
+
+  hero.style.transition = "all 1s ease";
+  hero.style.opacity = "1";
+  hero.style.transform = "translateY(0)";
+
+}, 200);
+```
+
+}
+
+});
+
+/* Footer Year */
+
+const footerText = document.querySelector("footer p");
+
+if (footerText) {
+
+footerText.innerHTML =
 `© ${new Date().getFullYear()} Felix Kwabena Asare | Software Quality Assurance Engineer`;
-```
 
 }
 
